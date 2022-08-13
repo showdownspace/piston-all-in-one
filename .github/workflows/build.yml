@@ -1,0 +1,17 @@
+name: Build image
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to GitHub registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+      - run: git clone https://github.com/engineer-man/piston.git
+      - run: cd piston && ./builder/build.sh dev.pps piston ghcr.io/showdownspace/piston
+      - run: docker push ghcr.io/showdownspace/piston
