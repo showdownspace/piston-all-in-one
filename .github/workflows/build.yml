@@ -13,5 +13,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
       - run: git clone https://github.com/engineer-man/piston.git
-      - run: cd piston && ./builder/build.sh dev.pps piston ghcr.io/showdownspace/piston
+      - run: cd piston && ./builder/build.sh dev.pps ghcr.io/showdownspace/piston
+      - run: docker history ghcr.io/showdownspace/piston
       - run: docker push ghcr.io/showdownspace/piston
